@@ -1,0 +1,17 @@
+.btns{
+	position: absolute;
+	top:5px;
+	right:10px;
+}
+
+.mui-scroll-wrapper{
+	top:50px;
+}
+
+.mui-icon-plus{
+	position:fixed;
+	bottom:40px;
+	right:20px;
+	font-size:40px;
+	z-index:999;
+}
