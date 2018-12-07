@@ -1,22 +1,53 @@
 require(['./js/config.js'],function(){
 	require(['mui','dom'],function(mui,dom){
-		mui.init();
+		var pagenum = 0,	//第几页
+			pageSize = 10,	//每页条数
+			status = false,
+			total;//是否到最底	
+			
+		mui.init({
+			pullRefresh:{
+				container:'#pullrefresh',
+				up:{
+					auto:true,
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
+		});
+		
+		//上拉加载
+		function pullupRefresh(){
+			setTimeout(function(){
+				pagenum++;
+				getList(pagenum,pageSize);
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(total === pagenum);
+			},1500)
+		}
 		
 		//滚动
 		mui('.mui-scroll-wrapper').scroll({
 			deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
 		});
 		
-		//请求数据
-		mui.ajax('/users/api/userlist',{
-			dataType:'json',
-			success:function(res){
-				console.log(res);
-				if(res.code === 1){
-					renderList(res.data);
+		function getList(){
+			//请求数据
+			mui.ajax('/users/api/userlist',{
+				dataType:'json',
+				data:{
+					pagenum:pagenum,
+					pageSize:pageSize
+				},
+				success:function(res){
+					console.log(res);
+					if(res.code === 1){
+						renderList(res.data);
+						total = res.total;
+					}
 				}
-			}
-		})	
+			})		
+		}
+		
 		
 		//渲染数据
 		function renderList(data){

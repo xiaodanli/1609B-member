@@ -8,19 +8,19 @@ gulp.task('server',function(){
 		port:9090,
 		proxies:[
 			{
-				source:'/users/api/userlist',target:'http://192.168.1.118:3000/users/api/userlist'
+				source:'/users/api/userlist',target:'http://192.168.2.37:3000/users/api/userlist'
 			},
 			{
-				source:'/users/api/add',target:'http://192.168.1.118:3000/users/api/add'
+				source:'/users/api/add',target:'http://192.168.2.37:3000/users/api/add'
 			},
 			{
-				source:'/users/api/detail',target:'http://192.168.1.118:3000/users/api/detail'
+				source:'/users/api/detail',target:'http://192.168.2.37:3000/users/api/detail'
 			},
 			{
-				source:'/users/api/del',target:'http://192.168.1.118:3000/users/api/del'
+				source:'/users/api/del',target:'http://192.168.2.37:3000/users/api/del'
 			},
 			{
-				source:'/users/api/update',target:'http://192.168.1.118:3000/users/api/update'
+				source:'/users/api/update',target:'http://192.168.2.37:3000/users/api/update'
 			}
 		]
 	}))

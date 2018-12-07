@@ -7,13 +7,32 @@ var sql = require('../mysql/sql');
 
 /* GET users listing. */
 router.get('/api/userlist', function(req, res, next) {
-  query(sql.SELECT_ALL,function(error,results){
+  var pagenum = req.query.pagenum,
+      pageSize = req.query.pageSize;
+  
+  query(sql.SELECT_COUNT,function(error,results){
     if(error){
       res.json({code:0,msg:error})
     }else{
-      res.json({code:1,data:results})
+      var count = results[0]['count(*)'];
+      var total = Math.ceil(count/pageSize);
+      queryUserList(total);
     }
   })
+
+  function queryUserList(total){
+    var start = (pagenum - 1)*pageSize;
+    console.log(start,pageSize)
+    var sqlStr = `select * from userlist order by create_time desc limit ${start},${pageSize}`;
+    query(sqlStr,function(error,results){
+        if(error){
+          res.json({code:0,msg:error})
+        }else{
+          res.json({code:1,data:results,total:total})
+        }
+      })
+  }
+  
 });
 
 //添加成员信息

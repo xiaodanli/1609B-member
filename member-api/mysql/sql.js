@@ -1,6 +1,8 @@
 module.exports = {
     //查询所有的成员信息
     'SELECT_ALL':'select * from userlist order by create_time desc',
+    //查询数据总条数
+    'SELECT_COUNT':'select count(*) from userlist',
     //添加成员信息
     'ADD_MEMBER':'insert into userlist (name,age,phone,address,id_card,create_time) values (?,?,?,?,?,?)',
     //查询成员是否存在
